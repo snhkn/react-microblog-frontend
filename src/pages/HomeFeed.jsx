@@ -1,41 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const HomeFeed = () => {
-  // temporary post list — later this will come from backend
-  const initialPosts = [
-    {
-      id: 1,
-      author: "Alice",
-      content: "Hello world! This is my first post 🚀",
-      date: "2025-10-16",
-    },
-    {
-      id: 2,
-      author: "Bob",
-      content: "Learning React step by step 💡",
-      date: "2025-10-15",
-    },
-    {
-      id: 3,
-      author: "Charlie",
-      content: "MicroBlog is coming alive!",
-      date: "2025-10-14",
-    },
-  ];
 
-  const [posts, setPosts] = useState(initialPosts);
+  const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState("");
 
+  //Fetch posts
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts?_limit=5")
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  }, []);
+
+  //Add new post
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newEntry = {
-        id: posts.length + 1,
-        author: "You",
-        content: newPost,
-        date: new Date().toLocaleDateString(),
-    }
-    setPosts([newEntry, ...posts]);
-    setNewPost("");
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", {
+        title: "New Post",
+        body: newPost,
+        userId: 1,
+      })
+      .then((response) => {
+        setPosts([response.data, ...posts]);
+        setNewPost("");
+      })
+      .catch((error) => {
+        console.error("Error adding post:", error);
+      });
   };
 
   return (
@@ -71,7 +69,12 @@ const HomeFeed = () => {
           >
             <div className="font-semibold text-lg">{post.author}</div>
             <div className="text-gray-300 text-sm">{post.date}</div>
-            <p className="mt-2">{post.content}</p>
+            {/*<p className="mt-2">{post.content}</p>*/}
+            <h2 className="font-semibold text-lg">{post.title}</h2>
+            <p className="mt-2 text-gray-300">{post.body}</p>
+            <div className="text-gray-400 text-sm mb-2">User {post.userId}</div>
+
+
           </div>
         ))}
       </div>
