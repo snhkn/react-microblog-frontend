@@ -9,7 +9,7 @@ const HomeFeed = () => {
   //Fetch posts
   useEffect(() => {
     axios
-      .get("https://jsonplaceholder.typicode.com/posts?_limit=5")
+      .get("http://localhost:8080/api/public/posts")
       .then((response) => {
         setPosts(response.data);
       })
@@ -22,7 +22,7 @@ const HomeFeed = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("https://jsonplaceholder.typicode.com/posts", {
+      .post("http://localhost:8080/api/admin/posts", {
         title: "New Post",
         body: newPost,
         userId: 1,
