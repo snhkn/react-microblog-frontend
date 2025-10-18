@@ -11,6 +11,7 @@ const HomeFeed = () => {
     axios
       .get("http://localhost:8080/api/public/posts")
       .then((response) => {
+        console.log(response.data)
         setPosts(response.data);
       })
       .catch((error) => {
@@ -23,9 +24,8 @@ const HomeFeed = () => {
     e.preventDefault();
     axios
       .post("http://localhost:8080/api/admin/posts", {
-        title: "New Post",
         body: newPost,
-        userId: 1,
+        author: "Guest",
       })
       .then((response) => {
         setPosts([response.data, ...posts]);
@@ -67,13 +67,9 @@ const HomeFeed = () => {
             key={post.id}
             className="bg-[rgba(255,255,255,0.05)] p-4 rounded-lg shadow"
           >
-            <div className="font-semibold text-lg">{post.author}</div>
-            <div className="text-gray-300 text-sm">{post.date}</div>
-            {/*<p className="mt-2">{post.content}</p>*/}
-            <h2 className="font-semibold text-lg">{post.title}</h2>
-            <p className="mt-2 text-gray-300">{post.body}</p>
-            <div className="text-gray-400 text-sm mb-2">User {post.userId}</div>
-
+            <div className="font-semibold text-lg">{post.author} says:</div>
+            <p className="mt-2 text-gray-500">{post.body}</p>
+            <div className="text-gray-300 text-sm">{new Date(post.createdAt).toLocaleString()}</div>
 
           </div>
         ))}
