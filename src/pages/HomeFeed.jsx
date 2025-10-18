@@ -4,7 +4,7 @@ import axios from "axios";
 const HomeFeed = () => {
 
   const [posts, setPosts] = useState([]);
-  const [newPost, setNewPost] = useState("");
+  const [newPost, setNewPost] = useState({ body: '' });
 
   //Fetch posts
   useEffect(() => {
@@ -24,12 +24,12 @@ const HomeFeed = () => {
     e.preventDefault();
     axios
       .post("http://localhost:8080/api/admin/posts", {
-        body: newPost,
+        body: newPost.body,
         author: "Guest",
       })
       .then((response) => {
         setPosts([response.data, ...posts]);
-        setNewPost("");
+        setNewPost({ body: "" });
       })
       .catch((error) => {
         console.error("Error adding post:", error);
@@ -42,18 +42,23 @@ const HomeFeed = () => {
 
       <form onSubmit={handleSubmit} className="mb-6">
         <textarea
-            value={newPost}
-            onChange={(e)=>setNewPost(e.target.value)}
+            value={newPost.body}
+            onChange={(e) => setNewPost({ ...newPost, body: e.target.value.slice(0, 280) })}
             placeholder="What's on your mind?"
             className="w-full p-2 rounded bg-gray-700 text-white"
             rows="3"
         >
-
         </textarea>
+
+        <p className="text-right text-gray-400 text-sm">
+          {newPost.body.length}/280
+        </p>
+
 
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-2"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-2 disabled:bg-gray-500"
+          disabled={newPost.body.length === 0}
         >
           Post
         </button>
