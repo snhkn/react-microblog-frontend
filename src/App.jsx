@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import  HomeFeed  from './pages/HomeFeed'
 import Navbar from './components/shared/Navbar'
 import LogIn from './components/auth/LogIn'
+import Register from './components/auth/Register'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeFeed/>}/>
           <Route path="/login" element={<LogIn/>}/>
+          <Route path='/register' element={ <Register />}/>
         </Routes>
       </div>
     </div>
