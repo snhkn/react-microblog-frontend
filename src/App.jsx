@@ -2,6 +2,7 @@ import './styles/App.css'
 import { Routes, Route } from 'react-router-dom'
 import  HomeFeed  from './pages/HomeFeed'
 import Navbar from './components/shared/Navbar'
+import LogIn from './components/auth/LogIn'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <div className='container mx-auto px-4 py-6'>
         <Routes>
           <Route path="/" element={<HomeFeed/>}/>
+          <Route path="/login" element={<LogIn/>}/>
         </Routes>
       </div>
     </div>
