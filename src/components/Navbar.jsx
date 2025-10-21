@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import { FaSignInAlt } from "react-icons/fa";
 
 const Navbar = () => {
 
@@ -21,9 +22,15 @@ const Navbar = () => {
 
                     {/* Sign In Button - pushed to right */}
                     <div className="hidden md:block ml-auto">
-                        <button className="px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white bg-gray-700">
-                            Sign In
-                        </button>
+                        <Link className="flex items-center space-x-2 px-4 py-[6px]
+                            bg-gradient-to-r from-purple-600 to-red-500
+                            text-white font-semibold rounded-md shadow-lg
+                            hover:from-purple-500 hover:to-red-400 transition
+                            duration-300 ease-in-out transform "
+                    to="/login">
+                            <FaSignInAlt />
+                            <span>LogIn</span>
+                        </Link>
                     </div>
 
                     {/* Mobile menu button */}
