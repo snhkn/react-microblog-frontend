@@ -1,7 +1,7 @@
 import './styles/App.css'
 import { Routes, Route } from 'react-router-dom'
 import  HomeFeed  from './pages/HomeFeed'
-import Navbar from './components/Navbar'
+import Navbar from './components/shared/Navbar'
 
 function App() {
 
