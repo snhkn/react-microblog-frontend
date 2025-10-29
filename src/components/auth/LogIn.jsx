@@ -40,15 +40,16 @@ const LogIn = () => {
             <hr className="mt-2 mb-5 text-black" />
             <div className="flex flex-col gap-3">
                 <InputField
-                    label="UserName"
+                    label="Email"
                     required
-                    id="username"
-                    type="text"
-                    message="*UserName is required"
-                    placeholder="Enter your username"
+                    id="email"
+                    type="email"
+                    message="*Email is required"
+                    placeholder="Enter your email"
                     register={register}
                     errors={errors}
-                    />
+                />
+
 
                 <InputField
                     label="Password"

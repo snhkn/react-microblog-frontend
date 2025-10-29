@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api/api";
 
 const HomeFeed = () => {
 
@@ -8,7 +9,7 @@ const HomeFeed = () => {
 
   //Fetch posts
   useEffect(() => {
-    axios
+    api
       .get("http://localhost:8080/api/public/posts")
       .then((response) => {
         console.log(response.data)
@@ -22,10 +23,9 @@ const HomeFeed = () => {
   //Add new post
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
+    api
       .post("http://localhost:8080/api/admin/posts", {
-        body: newPost.body,
-        author: "Guest",
+        body: newPost.body
       })
       .then((response) => {
         setPosts([response.data, ...posts]);
