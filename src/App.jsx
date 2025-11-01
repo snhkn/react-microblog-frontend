@@ -4,6 +4,7 @@ import  HomeFeed  from './pages/HomeFeed'
 import Navbar from './components/shared/Navbar'
 import LogIn from './components/auth/LogIn'
 import Register from './components/auth/Register'
+import Profile from './pages/Profile'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<HomeFeed/>}/>
           <Route path="/login" element={<LogIn/>}/>
           <Route path='/register' element={ <Register />}/>
+          <Route path='/profile' element={ <Profile />}/>
         </Routes>
       </div>
     </div>

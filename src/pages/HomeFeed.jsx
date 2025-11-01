@@ -10,9 +10,8 @@ const HomeFeed = () => {
   //Fetch posts
   useEffect(() => {
     api
-      .get("http://localhost:8080/api/public/posts")
+      .get("/public/posts")
       .then((response) => {
-        console.log(response.data)
         setPosts(response.data);
       })
       .catch((error) => {
@@ -24,7 +23,7 @@ const HomeFeed = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     api
-      .post("http://localhost:8080/api/admin/posts", {
+      .post("/admin/posts", {
         body: newPost.body
       })
       .then((response) => {
