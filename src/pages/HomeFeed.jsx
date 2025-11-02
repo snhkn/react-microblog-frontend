@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../api/api";
+import Post from "../components/shared/Post";
 
 const HomeFeed = () => {
 
@@ -67,17 +68,10 @@ const HomeFeed = () => {
 
       <div className="space-y-4">
         {posts.map((post) => (
-          <div
-            key={post.id}
-            className="bg-[rgba(255,255,255,0.05)] p-4 rounded-lg shadow"
-          >
-            <div className="font-semibold text-lg">{post.author} says:</div>
-            <p className="mt-2 text-gray-500">{post.body}</p>
-            <div className="text-gray-300 text-sm">{new Date(post.createdAt).toLocaleString()}</div>
-
-          </div>
+          <Post key={post.id} post={post} />
         ))}
       </div>
+
     </main>
   );
 };

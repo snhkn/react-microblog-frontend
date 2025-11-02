@@ -1,17 +1,27 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 import toast from "react-hot-toast";
+import Post from "../components/shared/Post"
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
+  const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await api.get("/profile/users/me");
-        setUser(res.data);
+
+        // Fetch both user info and their posts
+        const [userRes, postsRes] = await Promise.all([
+          api.get("/profile/users/me"),
+          api.get("/profile/users/me/posts"),
+        ]);
+
+        setUser(userRes.data);
+        setUserPosts(postsRes.data);
+
       } catch (err) {
         console.error(err);
         toast.error("Failed to fetch user info. Please login again.");
@@ -61,6 +71,19 @@ const ProfilePage = () => {
           </button>
         </div>
       </div>
+      {/* User Posts */}
+      <section>
+        <h2 className="text-xl font-bold mb-4 text-gray-200">Posts by {user.username}</h2>
+        {userPosts.length > 0 ? (
+          <div className="space-y-4">
+            {userPosts.map((post) => (
+              <Post key={post.id} post={post} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400">No posts yet.</p>
+        )}
+      </section>
     </main>
   );
 };
