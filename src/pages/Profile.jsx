@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import api from "../api/api";
 import toast from "react-hot-toast";
 import Post from "../components/shared/Post"
+import ProfileEditor from "./ProfileEditor";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isEditing , setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,6 +34,13 @@ const ProfilePage = () => {
 
     fetchUser();
   }, []);
+
+  const handleProfileUpdate = (updatedData) => {
+      setUser((prev)=>({
+        ...prev,
+        ...updatedData,
+      }));
+  }
 
   if (loading) return <p className="text-center mt-10 text-gray-400">Loading...</p>;
   if (!user) return <p className="text-center mt-10 text-gray-400">No user data available.</p>;
@@ -64,13 +73,16 @@ const ProfilePage = () => {
             <span className="font-semibold text-white">0</span> following
           </p>
 
+          {/* EDIT BUTTON */}
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow mt-2"
+            onClick={() => setIsEditing(true)}
           >
             Edit your profile
           </button>
         </div>
       </div>
+
       {/* User Posts */}
       <section>
         <h2 className="text-xl font-bold mb-4 text-gray-200">Posts by {user.username}</h2>
@@ -84,6 +96,26 @@ const ProfilePage = () => {
           <p className="text-gray-400">No posts yet.</p>
         )}
       </section>
+
+       {/* MODAL OVERLAY */}
+      {isEditing && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-gray-900 rounded-2xl p-6 w-full max-w-lg relative">
+            <button
+              onClick={() => setIsEditing(false)}
+              className="absolute top-3 right-3 text-gray-400 hover:text-white text-xl"
+            >
+              ✕
+            </button>
+            <ProfileEditor
+              user={user}
+              onClose={() => setIsEditing(false)}
+              onUpdate={handleProfileUpdate}
+            />
+          </div>
+        </div>
+      )}
+
     </main>
   );
 };
