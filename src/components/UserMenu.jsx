@@ -3,14 +3,18 @@ import React from 'react'
 import { BiUser } from 'react-icons/bi';
 import { TbLogs } from "react-icons/tb";
 import { IoExitOutline } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Backdrop from './shared/Backdrop';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { logOutUser } from '../store/actions';
 
 const UserMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
@@ -19,8 +23,8 @@ const UserMenu = () => {
     };
 
     const logOutHandler = () => {
-
-      };
+        dispatch(logOutUser(navigate));
+    };
 
     return (
       <div className='relative z-30'>

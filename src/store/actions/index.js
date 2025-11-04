@@ -36,3 +36,15 @@ export const registerNewUser
             setLoader(false);
         }
 };
+
+export const logOutUser = (navigate) => async (dispatch) => {
+  try {
+    await api.post("/auth/logout");
+  } catch (err) {
+    console.error("Logout error:", err);
+  } finally {
+    dispatch({ type: "LOG_OUT" });
+    localStorage.removeItem("auth");
+    navigate("/login");
+  }
+};
