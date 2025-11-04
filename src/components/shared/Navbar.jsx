@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
 import { FaSignInAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import UserMenu from "../UserMenu";
 
 const Navbar = () => {
 
     const [menuOpen, setMenuOpen] = useState(false);
+    const { user } = useSelector((state)=>state.auth);
+
 
     return (
         <nav className="fixed top-0 w-full z-40 bg-[rgba(160,134,134,0.8)] backdrop-blur-lg border-b border-white/10 shadow-lg">
@@ -22,15 +26,27 @@ const Navbar = () => {
 
                     {/* Sign In Button - pushed to right */}
                     <div className="hidden md:block ml-auto">
-                        <Link className="flex items-center space-x-2 px-4 py-[6px]
-                            bg-gradient-to-r from-purple-600 to-red-500
-                            text-white font-semibold rounded-md shadow-lg
-                            hover:from-purple-500 hover:to-red-400 transition
-                            duration-300 ease-in-out transform "
-                    to="/login">
-                            <FaSignInAlt />
-                            <span>LogIn</span>
-                        </Link>
+                        {(user && user.id) ? (
+
+                                <li className="list-none font-[500] transition-all duration-150">
+                                    <UserMenu />
+                                </li>
+
+                        ) : (
+                            <li className="font-[500] transition-all duration-150">
+                                <Link
+                                className="flex items-center space-x-2 px-4 py-[6px]
+                                    bg-gradient-to-r from-purple-600 to-red-500
+                                    text-white font-semibold rounded-md shadow-lg
+                                    hover:from-purple-500 hover:to-red-400 transition
+                                    duration-300 ease-in-out transform"
+                                to="/login"
+                                >
+                                <FaSignInAlt />
+                                <span>LogIn</span>
+                                </Link>
+                            </li>
+                        )}
                     </div>
 
                     {/* Mobile menu button */}
