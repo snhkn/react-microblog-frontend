@@ -5,6 +5,7 @@ import Navbar from './components/shared/Navbar'
 import LogIn from './components/auth/LogIn'
 import Register from './components/auth/Register'
 import Profile from './pages/Profile'
+import PrivateRoute from './components/PrivateRoutes'
 
 function App() {
 
@@ -14,10 +15,13 @@ function App() {
       <Navbar />
       <div className='container mx-auto px-4 py-6'>
         <Routes>
-          <Route path="/" element={<HomeFeed/>}/>
+
           <Route path="/login" element={<LogIn/>}/>
           <Route path='/register' element={ <Register />}/>
-          <Route path='/profile' element={ <Profile />}/>
+          <Route element={<PrivateRoute />}>
+              <Route path="/" element={<HomeFeed/>}/>
+              <Route path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
       </div>
     </div>

@@ -33,7 +33,7 @@ const Navbar = () => {
                                 </li>
 
                         ) : (
-                            <li className="font-[500] transition-all duration-150">
+                            <li className="list-none font-[500] transition-all duration-150">
                                 <Link
                                 className="flex items-center space-x-2 px-4 py-[6px]
                                     bg-gradient-to-r from-purple-600 to-red-500
