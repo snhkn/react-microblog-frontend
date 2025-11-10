@@ -4,7 +4,7 @@ import  HomeFeed  from './pages/HomeFeed'
 import Navbar from './components/shared/Navbar'
 import LogIn from './components/auth/LogIn'
 import Register from './components/auth/Register'
-import Profile from './pages/Profile'
+import ProfilePage from './pages/Profile'
 import PrivateRoute from './components/PrivateRoutes'
 
 function App() {
@@ -20,7 +20,8 @@ function App() {
           <Route path='/register' element={ <Register />}/>
           <Route element={<PrivateRoute />}>
               <Route path="/" element={<HomeFeed/>}/>
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/profile/:userId" element={<ProfilePage />} />
           </Route>
         </Routes>
       </div>
