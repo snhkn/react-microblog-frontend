@@ -6,6 +6,7 @@ import LogIn from './components/auth/LogIn'
 import Register from './components/auth/Register'
 import ProfilePage from './pages/Profile'
 import PrivateRoute from './components/PrivateRoutes'
+import NewPost from './pages/NewPost'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='/register' element={ <Register />}/>
           <Route element={<PrivateRoute />}>
               <Route path="/" element={<HomeFeed/>}/>
+              <Route path="/newpost" element={<NewPost/>}/>
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/profile/:userId" element={<ProfilePage />} />
           </Route>
