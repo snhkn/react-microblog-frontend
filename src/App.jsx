@@ -7,6 +7,7 @@ import Register from './components/auth/Register'
 import ProfilePage from './pages/Profile'
 import PrivateRoute from './components/PrivateRoutes'
 import NewPost from './pages/NewPost'
+import ExplorePage from './pages/Explore'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/newpost" element={<NewPost/>}/>
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/profile/:userId" element={<ProfilePage />} />
+              <Route path="/explore" element={<ExplorePage />}/>
           </Route>
         </Routes>
       </div>
