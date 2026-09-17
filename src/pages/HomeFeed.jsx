@@ -19,12 +19,28 @@ const HomeFeed = () => {
       });
   }, []);
 
+  //Edit a post
+  const handleUpdated = (updatedPost) => {
+    setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+            post.id === updatedPost.id ? updatedPost : post
+        )
+    );
+  };
+
+  //Delete a post
+  const handleDeleted = (postId) => {
+    setPosts((prevPosts) =>
+        prevPosts.filter((post) => post.id !== postId)
+    );
+  };
+
 
   return (
     <main>
       <div className="space-y-4">
         {posts.map((post) => (
-          <Post key={post.id} post={post} />
+          <Post key={post.id} post={post} onUpdated={handleUpdated} onDeleted={handleDeleted} />
         ))}
       </div>
 

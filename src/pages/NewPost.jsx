@@ -1,17 +1,46 @@
-import {useState } from "react";
+import {useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import api from "../api/api";
+import Post from "../components/shared/Post";
 
 const NewPost = () => {
 
-const [posts, setPosts] = useState([]);
-const [newPost, setNewPost] = useState({ body: '' });
+  const { user: currentUser } = useSelector((state) => state.auth);
+
+  const [loading, setLoading] = useState(true);
+
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState({ body: '' });
+
+
+  // Fetch posts
+  useEffect(() => {
+    if (!currentUser) return;
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        const response = await api.get("/profile/users/me/posts");
+        setPosts(response.data);
+
+      } catch (err) {
+        console.error("Error loading profile:", err);
+        toast.error("Failed to fetch user info. Please login again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentUser]);
 
   //Add new post
   const handleSubmit = (e) => {
     e.preventDefault();
     api
-      .post("/admin/posts", {
+      .post("/posts", {
         body: newPost.body
       })
       .then((response) => {
@@ -21,6 +50,22 @@ const [newPost, setNewPost] = useState({ body: '' });
       .catch((error) => {
         console.error("Error adding post:", error);
       });
+  };
+
+  //Edit a post
+  const handleUpdated = (updatedPost) => {
+    setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+            post.id === updatedPost.id ? updatedPost : post
+        )
+    );
+  };
+
+  //Delete a post
+  const handleDeleted = (postId) => {
+    setPosts((prevPosts) =>
+        prevPosts.filter((post) => post.id !== postId)
+    );
   };
 
   return (
@@ -52,6 +97,19 @@ const [newPost, setNewPost] = useState({ body: '' });
 
 
       </form>
+
+      {/* Posts */}
+      <section>
+        {posts.length > 0 ? (
+          <div className="space-y-4">
+            {posts.map((post) => (
+              <Post key={post.id} post={post} onUpdated={handleUpdated} onDeleted={handleDeleted}/>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400">No posts yet.</p>
+        )}
+      </section>
 
     </main>
   );

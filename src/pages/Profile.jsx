@@ -116,6 +116,23 @@ const ProfilePage = () => {
       <p className="text-center mt-10 text-gray-400">No user data available.</p>
     );
 
+
+  //Edit a post
+  const handleUpdated = (updatedPost) => {
+    setUserPosts((prevPosts) =>
+        prevPosts.map((post) =>
+            post.id === updatedPost.id ? updatedPost : post
+        )
+    );
+  };
+
+  //Delete a post
+  const handleDeleted = (postId) => {
+    setUserPosts((prevPosts) =>
+        prevPosts.filter((post) => post.id !== postId)
+    );
+  };
+
   return (
     <main className="pt-20 max-w-3xl mx-auto px-4 text-white">
       <div className="bg-[rgba(255,255,255,0.05)] p-6 rounded-lg shadow-lg flex flex-col sm:flex-row gap-6 items-center sm:items-start">
@@ -189,7 +206,7 @@ const ProfilePage = () => {
         {userPosts.length > 0 ? (
           <div className="space-y-4">
             {userPosts.map((post) => (
-              <Post key={post.id} post={post} />
+              <Post key={post.id} post={post} onUpdated={handleUpdated} onDeleted={handleDeleted}/>
             ))}
           </div>
         ) : (
